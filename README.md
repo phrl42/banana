@@ -25,8 +25,9 @@
 
 - [x] have fun
 
-# Instructions
+# Build Instructions
 
+# Linux 
 In order to generate makefiles, run:
 
 ```premake5 gmake2```
@@ -40,6 +41,8 @@ Run game binary:
 ```bin/target/Debug/Sandbox/Sandbox```
 
 # Info
+This engine currently only works on linux. Windows support will be added soon.
+
 I have been inspired by <a href="https://github.com/TheCherno/Hazel">Cherno</a> in terms of abstraction.
 
 Feel free to contribute
