@@ -1,4 +1,4 @@
-#include "_Banana.h"
+#include "incs.h"
 #include "ecs/components/QuadComponent.h"
 #include "renderer/Renderer2D.h"
 
@@ -15,7 +15,18 @@ namespace Banana
     {
       tex = Texture2D::Create(name);
     }
-    QuadComponent();
+
+    this->name = "QuadComponent";
+  }
+
+  QuadComponent::QuadComponent(TextureSpecification *spec)
+  {
+    tex = Texture2D::Create(spec);
+  }
+  
+  void QuadComponent::UpdateTexture()
+  {
+    tex->UpdateTexture();
   }
 
   void QuadComponent::OnUpdate(float dt, const Transform &transform)

@@ -38,13 +38,15 @@ namespace Banana
 
       virtual uint32_t GetRendererID() const = 0;
 
+      virtual void UpdateTexture() = 0;
       virtual bool operator==(const Texture& other) const = 0;
   };
 
   class Texture2D : public Texture
   {
     public:
-      static Shr<Texture2D> Create(const std::string& file_path);
-      static Shr<Texture2D> Create(const TextureSpecification& spec);
+        static Shr<Texture2D> Create(const std::string& file_path);
+        static Shr<Texture2D> Create(TextureSpecification* spec);
+        static Shr<Texture2D> Create(const TextureSpecification& spec);
   };
 };

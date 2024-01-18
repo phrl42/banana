@@ -1,3 +1,4 @@
+#include "incs.h"
 #include "platform/OpenGL/OpenGLTexture.h"
 
 #define STB_IMAGE_IMPLEMENTATION
@@ -74,8 +75,31 @@ namespace Banana
     stbi_image_free(data);
   }
 
-  OpenGLTexture2D::OpenGLTexture2D(const TextureSpecification& spec)
-    :width(spec.width), height(spec.height)
+  OpenGLTexture2D::OpenGLTexture2D(TextureSpecification* spec)
+    :width(spec->width), height(spec->height), spec(spec)
+  {
+    GLenum internalFormat = ImageFormatToGLInternalFormat(spec->format);
+    GLenum dataFormat = ImageFormatToGLDataFormat(spec->format);
+
+    glCreateTextures(GL_TEXTURE_2D, 1, &id);
+    glTextureStorage2D(id, 1, internalFormat, width, height);
+
+    glTextureParameteri(id, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTextureParameteri(id, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+    glTextureParameteri(id, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTextureParameteri(id, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+    uint32_t bpp = dataFormat == GL_RGBA ? 4 : 3;
+    if(spec->size != width * height * bpp)
+    {
+      LOG("Texture2D data must be entire texture.");
+    }
+    glTextureSubImage2D(id, 0, 0, 0, width, height, dataFormat, GL_UNSIGNED_BYTE, spec->data);
+  }
+
+  OpenGLTexture2D::OpenGLTexture2D(const TextureSpecification &spec)
+    :width(spec.width), height(spec.height), spec(nullptr)
   {
     GLenum internalFormat = ImageFormatToGLInternalFormat(spec.format);
     GLenum dataFormat = ImageFormatToGLDataFormat(spec.format);
@@ -102,6 +126,14 @@ namespace Banana
     glDeleteTextures(1, &id);
   }
 
+  void OpenGLTexture2D::UpdateTexture()
+  {
+    GLenum dataFormat = ImageFormatToGLDataFormat(spec->format);
+    glBindTexture(GL_TEXTURE_2D, id);
+    glTextureSubImage2D(id, 0, 0, 0, spec->width, spec->height, dataFormat, GL_UNSIGNED_BYTE, spec->data);
+    Unbind();
+  }
+  
   void OpenGLTexture2D::Bind(uint32_t slot) const
   {
     glBindTextureUnit(slot, id);

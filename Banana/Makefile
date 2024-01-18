@@ -78,6 +78,7 @@ GENERATED += $(OBJDIR)/IMGUILayer.o
 GENERATED += $(OBJDIR)/Input.o
 GENERATED += $(OBJDIR)/Layer.o
 GENERATED += $(OBJDIR)/LayerStack.o
+GENERATED += $(OBJDIR)/LineComponent.o
 GENERATED += $(OBJDIR)/OpenGLBuffer.o
 GENERATED += $(OBJDIR)/OpenGLContext.o
 GENERATED += $(OBJDIR)/OpenGLFramebuffer.o
@@ -111,6 +112,7 @@ OBJECTS += $(OBJDIR)/IMGUILayer.o
 OBJECTS += $(OBJDIR)/Input.o
 OBJECTS += $(OBJDIR)/Layer.o
 OBJECTS += $(OBJDIR)/LayerStack.o
+OBJECTS += $(OBJDIR)/LineComponent.o
 OBJECTS += $(OBJDIR)/OpenGLBuffer.o
 OBJECTS += $(OBJDIR)/OpenGLContext.o
 OBJECTS += $(OBJDIR)/OpenGLFramebuffer.o
@@ -196,6 +198,9 @@ endif
 # #############################################
 
 $(OBJDIR)/Transform.o: src/ecs/Transform.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/LineComponent.o: src/ecs/components/LineComponent.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/QuadComponent.o: src/ecs/components/QuadComponent.cpp

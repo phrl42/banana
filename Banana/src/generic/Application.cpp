@@ -1,13 +1,9 @@
 #include "Application.hpp"
-
 #include "imgui/IMGUILayer.h"
-#include "event/Input.hpp"
 #include "event/KeyCode.h"
-
+#include "event/Input.hpp"
 #include "renderer/Renderer.h"
-
 #include "renderer/RenderCommand.hpp"
-
 #include "Font.h"
 
 namespace Banana
@@ -43,7 +39,6 @@ namespace Banana
 
     debug_layer = new Banana::IMGUILayer("IMGUILAYER");
     
-    soundhelper = new SoundHelper();
     //Text::Init("assets/fonts/mononoki.ttf");
   }
 
@@ -177,7 +172,7 @@ namespace Banana
 
   Application::~Application()
   {
-    delete soundhelper;
+
   }
 
 };

@@ -6,39 +6,6 @@
 
 namespace Banana
 {
-
-  struct SoundHelper
-  {
-    public:
-      SoundHelper()
-      {
-        if(int success = ma_engine_init(NULL, &engine); success != MA_SUCCESS)
-        {
-          LOG("Could not init engine: " + std::to_string(success));
-        }
-
-        if(int success = ma_engine_start(&engine); success != MA_SUCCESS)
-        {
-          LOG("Could not start engine: " + std::to_string(success));
-        }
-      }
-
-      ~SoundHelper()
-      {
-        ma_engine_stop(&engine);
-        ma_engine_uninit(&engine);
-      }
-
-      ma_engine& GetEngine()
-      {
-        return engine;
-      }
-
-    private:
-
-      ma_engine engine;
-  };
-
   class Sound
   {
     public:
