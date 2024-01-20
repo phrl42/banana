@@ -24,6 +24,8 @@ namespace SANDBOX
   private:
     std::string name;
     Banana::Entity ent;
+
+    Banana::Sound sound;
   };
 
 };

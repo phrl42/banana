@@ -8,7 +8,7 @@
 namespace SANDBOX
 {
   TestLayer::TestLayer(const std::string& name)
-    : name(name)
+    : name(name), sound(Banana::Sound("assets/sounds/menu.wav"))
   {
     ent.transform.pos = {-1, 0, 0};
     ent.transform.size = {0.2, 0.2, 0};
@@ -43,6 +43,8 @@ namespace SANDBOX
 
   void TestLayer::OnUpdate(float dt)
   {
+    Banana::TextComponent* texcomp = (Banana::TextComponent*)ent.GetComponent("TextComponent");
+
     if(Banana::Input::IsKeyPressed(KEY_Y))
     {
       ent.transform.size.y += 2 * dt;
@@ -54,12 +56,12 @@ namespace SANDBOX
 
     if(Banana::Input::IsKeyPressed(KEY_N))
     {
-    
+      sound.Start();
+      texcomp->ChangeText("salad bombs");
     }
     
     if(Banana::Input::IsKeyPressed(KEY_J))
     {
-      Banana::TextComponent* texcomp = (Banana::TextComponent*)ent.GetComponent("TextComponent");
       texcomp->ChangeText("salad bomb");
     }
 
