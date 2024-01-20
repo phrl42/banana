@@ -13,14 +13,7 @@ namespace Banana
 
   Application::Application()
   {
-    #ifdef BUILD_DEBUG
-    LOG("Debug Mode");
-    #endif
-
-    if(Instance)
-    {
-      LOG("Application already exists!");
-    }
+    ASSERT(Instance, "Application already exists");
 
     Instance = this;
 

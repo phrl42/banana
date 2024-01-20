@@ -10,7 +10,7 @@ namespace Banana
       case RendererAPI::API::OpenGL: return MakeShr<OpenGLFramebuffer>(fb);
     }
     
-    LOG("RendererAPI in Framebuffer not found.");
+    ASSERT(true, "Could not determine RendererAPI in Framebuffer");
     return nullptr;
   }
 };

@@ -11,7 +11,7 @@ namespace Banana
       case RendererAPI::API::OpenGL: return MakeShr<OpenGLTexture2D>(path);
     }
 
-    LOG("Could not find Renderer API in Texture");
+    ASSERT(true, "Could not find RendererAPI in Texture2D");
     return nullptr;
   }
   
@@ -21,8 +21,20 @@ namespace Banana
     {
       case RendererAPI::API::OpenGL: return MakeShr<OpenGLTexture2D>(spec);
     }
-    
-    LOG("Could not find Renderer API in Texture");
+
+    ASSERT(true, "Could not find RendererAPI in Texture2D");
     return nullptr;
   }
+
+  Shr<Texture2D> Texture2D::Create(TextureSpecification* spec)
+  {
+    switch(Renderer::GetAPI())
+    {
+      case RendererAPI::API::OpenGL: return MakeShr<OpenGLTexture2D>(spec);
+    }
+
+    ASSERT(true, "Could not find RendererAPI in Texture2D");
+    return nullptr;
+  }
+
 };

@@ -9,4 +9,4 @@
 #endif
 
 
-#define ASSERT(x) if(x){ std::cout << "[ASSERT]: " << x << std::endl; std::exit(EXIT_FAILURE); }
+#define ASSERT(c, x) if(c){ std::cout << "[ASSERT]: " << x << std::endl; std::exit(EXIT_FAILURE); }

@@ -9,52 +9,28 @@ namespace Banana
   {
     switch(Renderer::GetAPI())
     {
-    
-    case RendererAPI::API::NONE:
-    {
-      LOG("RendererAPI is NONE!!! what the fuck are you doing??!");
-      break;
-    }
-    
     case RendererAPI::API::OpenGL:
     {
       return MakeShr<OpenGLVertexBuffer>(layout, size);
       break;
     }
-
-    default:
-    {
-      LOG("Something went wrong while detecting RendererAPI");
-      return nullptr;
-      break;
     }
-    }
+    ASSERT(true, "Could not determine RendererAPI in VertexBuffer");
+    return nullptr;
   }
 
   Shr<IndexBuffer> IndexBuffer::Create(uint32_t* indices, uint32_t size)
   {
     switch(Renderer::GetAPI())
     {
-
-    case RendererAPI::API::NONE:
-    {
-      LOG("RendererAPI is NONE!!! what the fuck are you doing??!");
-      break;
-    }
-
     case RendererAPI::API::OpenGL:
     {
       return MakeShr<OpenGLIndexBuffer>(indices, size);
       break;
     }
-    
-    default:
-    {
-      LOG("Something went wrong while detecting RendererAPI");
-      return nullptr;
-      break;
     }
-    }
+    ASSERT(true, "Could not determine RendererAPI in IndexBuffer");
+    return nullptr;
   }
 
 };

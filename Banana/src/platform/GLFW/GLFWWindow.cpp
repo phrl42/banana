@@ -53,19 +53,12 @@ namespace Banana
     windowData.height = window_props.height;
     windowData.width = window_props.width;
 
-    if(!glfw_init)
-    {
-      if(!glfwInit())
-      {
-        LOG("Could not initialize glfw");
-        exit(-1);
-      }
-    }
+    ASSERT(!glfwInit(), "Could not initialize GLFW");
 
     glfwSetErrorCallback(ErrorCallback);
 
     glfwWindow = glfwCreateWindow((int)window_props.width, 
-      (int)window_props.height, windowData.title.c_str(), nullptr, nullptr);
+				  (int)window_props.height, windowData.title.c_str(), nullptr, nullptr);
 
     // context
     context = Context::CreateContext((void*)glfwWindow);
@@ -78,31 +71,31 @@ namespace Banana
     // set glfw callbacks
 
     glfwSetWindowSizeCallback(glfwWindow, [](GLFWwindow* window, int width, int height)
-    {
-      WindowData& data = *(WindowData*)(glfwGetWindowUserPointer(window));
-      data.width = width;
-      data.height = height;
+      {
+	WindowData& data = *(WindowData*)(glfwGetWindowUserPointer(window));
+	data.width = width;
+	data.height = height;
       
-      WindowResizeEvent event(width, height);
+	WindowResizeEvent event(width, height);
 
-      data.callback(event);
-    });
+	data.callback(event);
+      });
 
     glfwSetWindowCloseCallback(glfwWindow, [](GLFWwindow* window)
-    {
+      {
         WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
         
         WindowCloseEvent event = WindowCloseEvent();
 
         data.callback(event);
-    });
+      });
 
     glfwSetKeyCallback(glfwWindow, [](GLFWwindow* window, int key, int scancode, int action, int mods)
-    {
-      WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
-
-      switch(action)
       {
+	WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+
+	switch(action)
+	{
         case GLFW_PRESS:
         {
           KeyPressedEvent event(key, 0, mods);
@@ -125,15 +118,15 @@ namespace Banana
 
         default:
           break;
-      }
-    });
+	}
+      });
 
     glfwSetMouseButtonCallback(glfwWindow, [](GLFWwindow* window, int button, int action, int mods)
-    {
-      WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
-
-      switch(action)
       {
+	WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+
+	switch(action)
+	{
         case GLFW_PRESS:
         {
           MouseButtonPressedEvent event(button, mods);
@@ -147,25 +140,25 @@ namespace Banana
           data.callback(event);
           break;
         }
-      }
+	}
 
-    });
+      });
 
     glfwSetScrollCallback(glfwWindow, [](GLFWwindow* window, double xOffset, double yOffset)
-    {
-      WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+      {
+	WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 
-      MouseScrolledEvent event((float)xOffset, (float)yOffset);
-      data.callback(event);
-    });
+	MouseScrolledEvent event((float)xOffset, (float)yOffset);
+	data.callback(event);
+      });
 
     glfwSetCursorPosCallback(glfwWindow, [](GLFWwindow* window, double x, double y)
-    {
-      WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+      {
+	WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 
-      MouseMovedEvent event((float)x, (float)y);
-      data.callback(event);
-    });
+	MouseMovedEvent event((float)x, (float)y);
+	data.callback(event);
+      });
 
   }
 
