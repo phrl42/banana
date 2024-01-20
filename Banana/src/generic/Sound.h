@@ -8,21 +8,24 @@ namespace Banana
 {
   class Sound
   {
-    public:
-      Sound(const std::string& path_to_sound, bool loop = false);
-      void Change(const std::string& path_to_sound, bool loop = false);
+  public:
+    Sound(const std::string& path_to_sound, bool loop = false);
+    Sound(float val);
 
-      void Start();
-      void Stop();
+    void Change(const std::string& path_to_sound, bool loop = false);
+    void Change(float val);
+    
+    void Start();
+    void Stop();
 
-      void SetVolume(float vol);
-      float GetVolume();
+    void SetVolume(float vol);
+    float GetVolume();
 
-      ~Sound();
+    ~Sound();
 
-    private:
-      void InitSound(const std::string& path_to_sound, bool loop);
-      ma_sound current_sound;
-      std::string sound_path;
+  private:
+    void InitSound(const std::string& path_to_sound, bool loop);
+    ma_sound current_sound;
+    std::string sound_path;
   };
 };

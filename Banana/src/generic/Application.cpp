@@ -13,6 +13,10 @@ namespace Banana
 
   Application::Application()
   {
+    #ifdef BUILD_DEBUG
+    LOG("Debug Mode");
+    #endif
+
     if(Instance)
     {
       LOG("Application already exists!");
@@ -38,7 +42,8 @@ namespace Banana
     fb = Banana::Framebuffer::Create(spec);
 
     debug_layer = new Banana::IMGUILayer("IMGUILAYER");
-    
+
+    sound_helper.Init();
     //Text::Init("assets/fonts/mononoki.ttf");
   }
 

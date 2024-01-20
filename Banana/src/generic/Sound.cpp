@@ -14,6 +14,11 @@ namespace Banana
     InitSound(path_to_sound, loop);
   }
 
+  Sound::Sound(float val)
+  {
+    // todo
+  }
+
   Sound::~Sound()
   {
     Stop();
@@ -21,8 +26,6 @@ namespace Banana
 
   void Sound::Change(const std::string& path_to_sound, bool loop)
   {
-    LOG("Sorry! This is not supported by miniaudio. Create a new Sound object");
-    return;
     if(ma_sound_is_playing(&current_sound))
     {
       Stop();
@@ -30,15 +33,20 @@ namespace Banana
 
     InitSound(path_to_sound, loop);
   }
+
+  void Sound::Change(float val)
+  {
+
+  }
     
   void Sound::InitSound(const std::string& path_to_sound, bool loop)
   {
-/*    if(int success = ma_sound_init_from_file(&Application::GetInstance().soundhelper->GetEngine(), path_to_sound.c_str(), MA_SOUND_FLAG_DECODE, NULL, NULL, &current_sound); success != MA_SUCCESS)
+    if(int success = ma_sound_init_from_file(&Application::GetInstance().Get_Sound_Engine(), path_to_sound.c_str(), MA_SOUND_FLAG_DECODE, NULL, NULL, &current_sound); success != MA_SUCCESS)
     {
       if(success == MA_DOES_NOT_EXIST)
       {
-        LOG("Could not find " + path_to_sound);
-        return;
+	LOG("Could not find " + path_to_sound);
+	return;
       }
       LOG("Could not init sound with MINIAUDIO error: " + std::to_string(success));
     }
@@ -46,7 +54,7 @@ namespace Banana
     if(loop)
     {
       ma_sound_set_looping(&current_sound, loop);
-      }*/
+    }
   }
 
   void Sound::Start()

@@ -26,7 +26,8 @@ namespace Banana
     inline Window& GetWindow() { return *window; }
 
     inline static Application& GetInstance() { return *Instance; }
-  
+
+    inline ma_engine& Get_Sound_Engine() { return sound_helper.engine; }
   private:
     bool OnWindowClose(WindowCloseEvent& e);
     bool OnWindowResize(WindowResizeEvent& e);
@@ -42,6 +43,39 @@ namespace Banana
     bool minimized = false;
   public:
     Banana::Shr<Banana::Framebuffer> fb;
+
+  private:
+    struct SoundHelper
+    {
+    public:
+      SoundHelper()
+      {
+
+      }
+
+      void Init()
+      {
+	LOG_DEBUG("Initialized Sound Helper");
+	if(int success = ma_engine_init(NULL, &engine); success != MA_SUCCESS)
+	{
+	  LOG("Could not init engine: " + std::to_string(success));
+	}
+
+	if(int success = ma_engine_start(&engine); success != MA_SUCCESS)
+	{
+	  LOG("Could not start engine: " + std::to_string(success));
+	}
+
+      }
+      ~SoundHelper()
+      {
+	LOG_DEBUG("Destroyed Sound Helper");
+	ma_engine_stop(&engine);
+	ma_engine_uninit(&engine);
+      }
+      ma_engine engine;
+    };
+    SoundHelper sound_helper;
   };
 
   // definition is in client

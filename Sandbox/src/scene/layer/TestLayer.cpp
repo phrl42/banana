@@ -8,7 +8,7 @@
 namespace SANDBOX
 {
   TestLayer::TestLayer(const std::string& name)
-  : name(name), sound(Banana::Sound("assets/sounds/test.wav")), b_sound(Banana::Sound("assets/sounds/menu.wav", true))
+    : name(name)
   {
     ent.transform.pos = {-1, 0, 0};
     ent.transform.size = {0.2, 0.2, 0};
@@ -18,7 +18,6 @@ namespace SANDBOX
 
     //ent.AddComponent(new Banana::QuadComponent("assets/textures/banana.png"));
     ent.AddComponent(new Banana::TextComponent("autistic double"));
-    b_sound.Start();
   }
 
   TestLayer::~TestLayer()
@@ -60,9 +59,8 @@ namespace SANDBOX
     
     if(Banana::Input::IsKeyPressed(KEY_J))
     {
-      sound.Start();
-      //Banana::TextComponent* texcomp = (Banana::TextComponent*)ent.GetComponent("TextComponent");
-      //texcomp->ChangeText("salad bomb");
+      Banana::TextComponent* texcomp = (Banana::TextComponent*)ent.GetComponent("TextComponent");
+      texcomp->ChangeText("salad bomb");
     }
 
     //ent.transform.rotation += 90 * dt;
