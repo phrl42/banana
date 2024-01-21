@@ -170,7 +170,7 @@ namespace Banana
 
   Application::~Application()
   {
-
+    LOG_DEBUG("Destroying Application including Scenes");
   }
 
 };

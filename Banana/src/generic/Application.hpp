@@ -28,21 +28,6 @@ namespace Banana
     inline static Application& GetInstance() { return *Instance; }
 
     inline ma_engine& Get_Sound_Engine() { return sound_helper.engine; }
-  private:
-    bool OnWindowClose(WindowCloseEvent& e);
-    bool OnWindowResize(WindowResizeEvent& e);
-
-    Layer* debug_layer;
-
-    SceneStack scene_stack;
-    std::unique_ptr<Window> window;
-
-    static Application* Instance;
-
-    bool running = true;
-    bool minimized = false;
-  public:
-    Banana::Shr<Banana::Framebuffer> fb;
 
   private:
     struct SoundHelper
@@ -72,6 +57,22 @@ namespace Banana
       ma_engine engine;
     };
     SoundHelper sound_helper;
+
+  private:
+    bool OnWindowClose(WindowCloseEvent& e);
+    bool OnWindowResize(WindowResizeEvent& e);
+
+    Layer* debug_layer;
+
+    SceneStack scene_stack;
+    std::unique_ptr<Window> window;
+
+    static Application* Instance;
+
+    bool running = true;
+    bool minimized = false;
+  public:
+    Banana::Shr<Banana::Framebuffer> fb;
   };
 
 // definition is in client

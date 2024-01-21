@@ -11,6 +11,7 @@ namespace Banana
   Sound::Sound(const std::string& path_to_sound, bool loop)
   :sound_path(path_to_sound)
   {
+    LOG_DEBUG("Init Sound");
     InitSound(path_to_sound, loop);
   }
 
@@ -21,6 +22,7 @@ namespace Banana
 
   Sound::~Sound()
   {
+    LOG_DEBUG("Destroy Sound");
     Stop();
   }
 
@@ -64,6 +66,7 @@ namespace Banana
 
   void Sound::Stop()
   {
+    LOG_DEBUG("Stop Sound");
     if(ma_sound_is_playing(&current_sound))
     {
       ma_sound_stop(&current_sound);
