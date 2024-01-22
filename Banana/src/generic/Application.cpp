@@ -28,12 +28,6 @@ namespace Banana
 
     Renderer::Init();
 
-    Banana::FramebufferProperties spec;
-    spec.width = prop.height;
-    spec.height = prop.width;
-
-    fb = Banana::Framebuffer::Create(spec);
-
     debug_layer = new Banana::IMGUILayer("IMGUILAYER");
 
     sound_helper.Init();
@@ -83,7 +77,11 @@ namespace Banana
     
     // tell opengl to resize framebuffer
     Renderer::OnWindowResize(e.getWidth(), e.getHeight());
-    fb->SetWindowDimension(e.getWidth(), e.getHeight());
+
+    for(Scene* scene : scene_stack)
+    {
+      scene->fb->SetWindowDimension(e.getWidth(), e.getHeight());
+    }
 
     minimized = false;
     return false;
@@ -95,6 +93,7 @@ namespace Banana
     for(Scene* scene : scene_stack)
     {
       scene->OnAttach();
+      fb_ids.push_back(scene->fb->GetColorAttachmentID());
     }
 
     debug_layer->OnAttach();
@@ -106,8 +105,6 @@ namespace Banana
       begin_time = window->GetTime();
       window->PollEvents();
 
-      // todo: come up with a better framebuffer implementation ( probably in the scenes )
-      fb->Bind();
       RenderCommand::SetClearColor(glm::vec4(0, 0, 0, 0));
 
       if(!minimized)
@@ -129,28 +126,15 @@ namespace Banana
 
         if(debug)
         {
-          fb->Unbind();
           debug_layer->OnUpdate(dt);
-          fb->Bind();
         }
-        else 
-        {
-          RenderCommand::CopyFramebuffer(fb->GetID(), 0, GetWindow().GetWidth(), GetWindow().GetHeight());
-        }
-        
-        if(!debug)
-        {
-
-        }
-
         for(Scene* scene : scene_stack)
         {
+	  scene->fb->Bind();
           scene->OnUpdate(dt);
+	  scene->fb->Unbind();
         }
-
       }
-      
-      fb->Unbind();
       
       window->SwapBuffers();
       RenderCommand::Clear();

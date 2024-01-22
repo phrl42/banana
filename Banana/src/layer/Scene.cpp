@@ -2,11 +2,19 @@
 
 #include "renderer/Renderer2D.h"
 
+#include "generic/Application.hpp"
+
 namespace Banana
 {
   Scene::Scene(const std::string& name)
-  : name(name), cam(Camera()) {}
+  : name(name), cam(Camera())
+  {
+    FramebufferProperties spec;
+    spec.width = Application::GetInstance().GetWindow().GetWidth();
+    spec.height = Application::GetInstance().GetWindow().GetHeight();
 
+    this->fb = Framebuffer::Create(spec);
+  }
 
   void Scene::PopLayer(Layer* layer)
   {

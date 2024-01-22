@@ -66,7 +66,6 @@ namespace Banana
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
-
     // dockspace stuff
     ImGuiWindowFlags window_flags = ImGuiWindowFlags_None;
     ImGuiDockNodeFlags dockflags = ImGuiDockNodeFlags_PassthruCentralNode;//ImGuiDockNodeFlags_None;
@@ -103,7 +102,10 @@ namespace Banana
       ImGui::DockBuilderFinish(dockspaceID);
 
 		  ImGui::DockBuilderDockWindow("Debug", dock_right_id);
-		  ImGui::DockBuilderDockWindow("Scene", dock_main_id);
+		  for(uint32_t i = 0; i < Application::GetInstance().fb_ids.size(); i++)
+		  {
+		    ImGui::DockBuilderDockWindow(std::string("Scene " + std::to_string(i)).c_str(), dock_main_id);
+		  }
 		  ImGui::DockBuilderDockWindow("Info", dock_down_id);
     }
 
@@ -120,12 +122,15 @@ namespace Banana
     ImGui::Begin("Info", nullptr, 0);
     ImGui::Text("Info text");
     ImGui::End();
+
+    for(uint32_t i = 0; i < Application::GetInstance().fb_ids.size(); i++)
+    {
+      ImGui::Begin(std::string("Scene " + std::to_string(i)).c_str(), nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoDecoration);
+      ImVec2 winsize = ImGui::GetWindowSize();
     
-    ImGui::Begin("Scene", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoDecoration);
-    ImVec2 winsize = ImGui::GetWindowSize();
-    
-    ImGui::Image((void*)Application::GetInstance().fb->GetColorAttachmentID(), {winsize.x, winsize.y - 42}, {0, 1}, {1, 0});
-    ImGui::End();
+      ImGui::Image((void*)Application::GetInstance().fb_ids[i], {winsize.x, winsize.y - 42}, {0, 1}, {1, 0});
+      ImGui::End();
+    }
 
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

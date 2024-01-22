@@ -11,7 +11,7 @@ namespace Banana
       case RendererAPI::API::OpenGL: return MakeShr<OpenGLShader>(file_path);
     }
 
-    LOG("Could not identify api in shader class. the hell are you doing??!");
+    ASSERT(true, "Could not determine RendererAPI in Shader");
     return nullptr;
   }
 };

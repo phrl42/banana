@@ -3,6 +3,7 @@
 
 #include "scene/layer/TestLayer.h"
 #include "scene/EntryScene.h"
+#include "scene/ExitScene.h"
 
 //-----EntryPoint.h-----
 #include "EntryPoint.h"
@@ -14,6 +15,7 @@ namespace SANDBOX
   {
     //PushLayer(new TestLayer("Test"));
     PushScene(new EntryScene("Entry"));
+    PushScene(new ExitScene("Exit"));
   }
 
   Sandbox::~Sandbox()

@@ -4,6 +4,8 @@
 #include "generic/Camera.h"
 #include "layer/LayerStack.h"
 
+#include "renderer/Framebuffer.h"
+
 namespace Banana
 {
   // TODO: in the future:
@@ -37,6 +39,8 @@ namespace Banana
 
     void DetachLayer();
 
+  public:
+    Banana::Shr<Banana::Framebuffer> fb;
   protected:
     std::string name;
     Camera cam;
