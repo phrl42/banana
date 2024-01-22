@@ -15,6 +15,7 @@ namespace Banana
     virtual void Unbind() override;
 
     virtual uint32_t GetColorAttachmentID() override;
+    virtual const uint32_t* GetColorAttachmentIDAddress() override;
 
     virtual uint32_t GetID() override { return id; };
 

@@ -62,9 +62,9 @@ namespace Banana
     bool OnWindowClose(WindowCloseEvent& e);
     bool OnWindowResize(WindowResizeEvent& e);
 
+    SceneStack scene_stack;
     Layer* debug_layer;
 
-    SceneStack scene_stack;
     std::unique_ptr<Window> window;
 
     static Application* Instance;

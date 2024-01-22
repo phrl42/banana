@@ -35,7 +35,7 @@ namespace Banana
     static const uint32_t MAX_QUADS = 20000;
     static const uint32_t MAX_VERTICES = MAX_QUADS * 4;
     static const uint32_t MAX_INDICES = MAX_QUADS * 6;
-		static const uint32_t MAX_TEXTURE_SLOTS = 32;
+    static const uint32_t MAX_TEXTURE_SLOTS = 32;
 
     Shr<VertexArray> quad_vertex_array;
     Shr<VertexBuffer> quad_vertex_buffer;
@@ -57,8 +57,8 @@ namespace Banana
     TextVertex* text_vertex_base = nullptr;
     TextVertex* text_vertex_ptr = nullptr;
 
-		std::array<Shr<Texture2D>, MAX_TEXTURE_SLOTS> TextureSlots;
-		uint32_t TextureSlotIndex = 1; // 0 = white texture
+    std::array<Shr<Texture2D>, MAX_TEXTURE_SLOTS> TextureSlots;
+    uint32_t TextureSlotIndex = 1; // 0 = white texture
     
     Shr<Texture2D> FontAtlasTexture;
   };
@@ -71,13 +71,13 @@ namespace Banana
     data.quad_vertex_array = VertexArray::Create();
 
     data.quad_vertex_buffer = VertexBuffer::Create(
-    {
-      {ShaderDataType::Float3, "aPos"},
-      {ShaderDataType::Float4, "aColor"},
-      {ShaderDataType::Float2, "aTexCoords"},
-      {ShaderDataType::Float, "aProjectionID"},
-      {ShaderDataType::Float, "aTexID"}
-    }, sizeof(QuadVertex) * data.MAX_QUADS);
+      {
+	{ShaderDataType::Float3, "aPos"},
+	{ShaderDataType::Float4, "aColor"},
+	{ShaderDataType::Float2, "aTexCoords"},
+	{ShaderDataType::Float, "aProjectionID"},
+	{ShaderDataType::Float, "aTexID"}
+      }, sizeof(QuadVertex) * data.MAX_QUADS);
 
     data.quad_vertex_array->AddVertexBuffer(data.quad_vertex_buffer);
   
@@ -109,12 +109,12 @@ namespace Banana
     // text api stuff
     data.text_vertex_array = VertexArray::Create();
     data.text_vertex_buffer = VertexBuffer::Create(
-    {
+      {
         {ShaderDataType::Float3, "aPos"},
         {ShaderDataType::Float4, "aColor"},
         {ShaderDataType::Float2, "aTexCoords"},
         {ShaderDataType::Float, "aProjectionID"}
-    }, sizeof(TextVertex) * data.MAX_VERTICES);
+      }, sizeof(TextVertex) * data.MAX_VERTICES);
 
     data.text_vertex_array->AddVertexBuffer(data.text_vertex_buffer);
     data.text_vertex_base = new TextVertex[data.MAX_VERTICES];
@@ -210,11 +210,7 @@ namespace Banana
 
   void Renderer2D::DrawQuad(const glm::vec3& pos, const glm::vec2& size, const glm::vec4& color, const Shr<Texture2D>& texture, Projection proj)
   {
-    if(texture == nullptr)
-    {
-      LOG("Omitted nullptr texture in renderer: Please initialize your texture");
-      return;
-    }
+    ASSERT(texture == nullptr, "Omitted nullptr texture in renderer: Please initialize your texture");
 
     if (data.QuadIndexCount >= data.MAX_INDICES)
       NextBatch();
@@ -281,11 +277,8 @@ namespace Banana
       DrawQuad(pos, size, color, texture, proj);
       return;
     }
-    if(texture == nullptr)
-    {
-      LOG("Omitted nullptr texture in renderer: Please initialize your texture");
-      return;
-    }
+
+    ASSERT(texture == nullptr, "Omitted nullptr texture in renderer: Please initialize your texture");
 
     if (data.QuadIndexCount >= data.MAX_INDICES)
       NextBatch();
@@ -444,80 +437,80 @@ namespace Banana
 
   void Renderer2D::DrawText(const std::string& text, Shr<Font> font, const glm::vec3& pos, const glm::vec3& size, const glm::vec4& color, Projection proj)
   {
-		const auto& fontGeometry = font->GetMSDFData()->FontGeometry;
-		const auto& metrics = fontGeometry.getMetrics();
-		Shr<Texture2D> fontAtlas = font->GetAtlasTexture();
+    const auto& fontGeometry = font->GetMSDFData()->FontGeometry;
+    const auto& metrics = fontGeometry.getMetrics();
+    Shr<Texture2D> fontAtlas = font->GetAtlasTexture();
 
-		data.FontAtlasTexture = fontAtlas;
+    data.FontAtlasTexture = fontAtlas;
 
-		double x = 0.0;
-		double fsScale = 1.0 / (metrics.ascenderY - metrics.descenderY);
-		double y = 0.0;
+    double x = 0.0;
+    double fsScale = 1.0 / (metrics.ascenderY - metrics.descenderY);
+    double y = 0.0;
 
-		const float spaceGlyphAdvance = fontGeometry.getGlyph(' ')->getAdvance();
+    const float spaceGlyphAdvance = fontGeometry.getGlyph(' ')->getAdvance();
 
-		glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos)
-			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
+    glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos)
+      * glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
 
     for (size_t i = 0; i < text.size(); i++)
     {
-			char character = text[i];
-			if (character == '\r')
-				continue;
+      char character = text[i];
+      if (character == '\r')
+	continue;
 
-			if (character == '\n')
-			{
-				x = 0;
-				y -= fsScale * metrics.lineHeight + 0;
-				continue;
-			}
+      if (character == '\n')
+      {
+	x = 0;
+	y -= fsScale * metrics.lineHeight + 0;
+	continue;
+      }
 
-			if (character == ' ')
-			{
-				float advance = spaceGlyphAdvance;
-				if (i < text.size() - 1)
-				{
-					char nextCharacter = text[i + 1];
-					double dAdvance;
-					fontGeometry.getAdvance(dAdvance, character, nextCharacter);
-					advance = (float)dAdvance;
-				}
+      if (character == ' ')
+      {
+	float advance = spaceGlyphAdvance;
+	if (i < text.size() - 1)
+	{
+	  char nextCharacter = text[i + 1];
+	  double dAdvance;
+	  fontGeometry.getAdvance(dAdvance, character, nextCharacter);
+	  advance = (float)dAdvance;
+	}
 
-				x += fsScale * advance + 0;
-				continue;
-			}
+	x += fsScale * advance + 0;
+	continue;
+      }
 
-			if (character == '\t')
-			{
-				// NOTE(Yan): is this right?
-				x += 4.0f * (fsScale * spaceGlyphAdvance + 0);
-				continue;
-			}
+      if (character == '\t')
+      {
+	// NOTE(Yan): is this right?
+	x += 4.0f * (fsScale * spaceGlyphAdvance + 0);
+	continue;
+      }
 
-			auto glyph = fontGeometry.getGlyph(character);
-			if (!glyph)
-				glyph = fontGeometry.getGlyph('?');
-			if (!glyph)
-				return;
+      auto glyph = fontGeometry.getGlyph(character);
+      if (!glyph)
+	glyph = fontGeometry.getGlyph('?');
+      if (!glyph)
+	return;
 
-			double al, ab, ar, at;
-			glyph->getQuadAtlasBounds(al, ab, ar, at);
-			glm::vec2 texCoordMin((float)al, (float)ab);
-			glm::vec2 texCoordMax((float)ar, (float)at);
+      double al, ab, ar, at;
+      glyph->getQuadAtlasBounds(al, ab, ar, at);
+      glm::vec2 texCoordMin((float)al, (float)ab);
+      glm::vec2 texCoordMax((float)ar, (float)at);
 
-			double pl, pb, pr, pt;
-			glyph->getQuadPlaneBounds(pl, pb, pr, pt);
-			glm::vec2 quadMin((float)pl, (float)pb);
-			glm::vec2 quadMax((float)pr, (float)pt);
+      double pl, pb, pr, pt;
+      glyph->getQuadPlaneBounds(pl, pb, pr, pt);
+      glm::vec2 quadMin((float)pl, (float)pb);
+      glm::vec2 quadMax((float)pr, (float)pt);
 
-			quadMin *= fsScale, quadMax *= fsScale;
-			quadMin += glm::vec2(x, y);
-			quadMax += glm::vec2(x, y);
+      quadMin *= fsScale, quadMax *= fsScale;
+      quadMin += glm::vec2(x, y);
+      quadMax += glm::vec2(x, y);
 
-			float texelWidth = 1.0f / fontAtlas->GetWidth();
-			float texelHeight = 1.0f / fontAtlas->GetHeight();
-			texCoordMin *= glm::vec2(texelWidth, texelHeight);
-			texCoordMax *= glm::vec2(texelWidth, texelHeight);
+      float texelWidth = 1.0f / fontAtlas->GetWidth();
+      float texelHeight = 1.0f / fontAtlas->GetHeight();
+      texCoordMin *= glm::vec2(texelWidth, texelHeight);
+      texCoordMax *= glm::vec2(texelWidth, texelHeight);
 
       
       // render here

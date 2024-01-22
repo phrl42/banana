@@ -106,6 +106,7 @@ namespace Banana
       window->PollEvents();
 
       RenderCommand::SetClearColor(glm::vec4(0, 0, 0, 0));
+      RenderCommand::Clear();
 
       if(!minimized)
       { 
@@ -128,16 +129,18 @@ namespace Banana
         {
           debug_layer->OnUpdate(dt);
         }
+	// hack because I am tired 
+	uint32_t i = 0;
         for(Scene* scene : scene_stack)
         {
 	  scene->fb->Bind();
           scene->OnUpdate(dt);
 	  scene->fb->Unbind();
+	  fb_ids[i] = scene->fb->GetColorAttachmentID();
         }
       }
       
       window->SwapBuffers();
-      RenderCommand::Clear();
 
       dt = window->GetTime() - begin_time;
     }
