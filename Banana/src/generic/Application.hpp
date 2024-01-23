@@ -72,7 +72,7 @@ namespace Banana
     bool running = true;
     bool minimized = false;
   public:
-    std::vector<uint32_t> fb_ids;
+    std::vector<uint32_t*> fb_ids;
   };
 
 // definition is in client

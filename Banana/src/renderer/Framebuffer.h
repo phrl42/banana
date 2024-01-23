@@ -21,7 +21,7 @@ namespace Banana
     virtual uint32_t GetID() = 0;
     
     virtual uint32_t GetColorAttachmentID() = 0;
-    virtual const uint32_t* GetColorAttachmentIDAddress() = 0;
+    virtual uint32_t* GetColorAttachmentIDAddress() = 0;
 
     virtual void SetWindowDimension(uint32_t width, uint32_t height) = 0;
 

@@ -93,7 +93,7 @@ namespace Banana
     for(Scene* scene : scene_stack)
     {
       scene->OnAttach();
-      fb_ids.push_back(scene->fb->GetColorAttachmentID());
+      fb_ids.push_back(scene->fb->GetColorAttachmentIDAddress());
     }
 
     debug_layer->OnAttach();
@@ -129,14 +129,12 @@ namespace Banana
         {
           debug_layer->OnUpdate(dt);
         }
-	// hack because I am tired 
-	uint32_t i = 0;
-        for(Scene* scene : scene_stack)
+
+	for(Scene* scene : scene_stack)
         {
 	  scene->fb->Bind();
           scene->OnUpdate(dt);
 	  scene->fb->Unbind();
-	  fb_ids[i] = scene->fb->GetColorAttachmentID();
         }
       }
       

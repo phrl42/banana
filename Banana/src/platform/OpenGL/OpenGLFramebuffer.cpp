@@ -57,7 +57,7 @@ namespace Banana
     return color_id;
   }
 
-  const uint32_t* OpenGLFramebuffer::GetColorAttachmentIDAddress()
+  uint32_t* OpenGLFramebuffer::GetColorAttachmentIDAddress()
   {
     return &color_id;
   }

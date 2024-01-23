@@ -127,8 +127,7 @@ namespace Banana
     {
       ImGui::Begin(std::string("Scene " + std::to_string(i)).c_str(), nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoDecoration);
       ImVec2 winsize = ImGui::GetWindowSize();
-    
-      ImGui::Image((void*)Application::GetInstance().fb_ids[i], {winsize.x, winsize.y - 42}, {0, 1}, {1, 0});
+      ImGui::Image((void*)*(Application::GetInstance().fb_ids[i]), {winsize.x, winsize.y - 42}, {0, 1}, {1, 0});
       ImGui::End();
     }
 

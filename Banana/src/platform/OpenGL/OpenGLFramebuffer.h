@@ -15,12 +15,11 @@ namespace Banana
     virtual void Unbind() override;
 
     virtual uint32_t GetColorAttachmentID() override;
-    virtual const uint32_t* GetColorAttachmentIDAddress() override;
+    virtual uint32_t* GetColorAttachmentIDAddress() override;
 
     virtual uint32_t GetID() override { return id; };
 
     virtual void SetWindowDimension(uint32_t width, uint32_t height) override;
-
 
     void Invalidate();
   private:
