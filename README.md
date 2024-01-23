@@ -17,7 +17,7 @@
 - [x] implement batch renderer
 - [X] sound system
 - [x] text rendering
-- [ ] fix sound system
+- [x] fix sound system
 - [ ] add scene / engine debugging stuff to imgui
 - [ ] optimize Renderer2D
 - [ ] circle renderer
