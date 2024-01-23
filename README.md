@@ -8,7 +8,7 @@
 
 <p>You have to put your <b>game source files into this engine</b>, unlike other engines which function as dynamic/static libraries of which you can't really interfere with. This gives the user the advantage to <b>modify the engine's source code as desired.</b></p>
 
-<p>PS: The user should be able to <b>make some quite decent games</b>. Text, Sound, Squares with(out) textures are supported. I am planning to support more geometric shapes and 3D objects in the future. ( I also have to fix god damn miniaudio crashing all the time )</p>
+<p>PS: The user should be able to <b>make some quite decent games</b>. Text, Sound, Squares with(out) textures are supported. I am planning to support more geometric shapes and 3D objects in the future.</p>
 
 # To Do:
 
