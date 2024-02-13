@@ -11,6 +11,8 @@
 #include "gtc/matrix_transform.hpp"
 #include "gtc/type_ptr.hpp"
 
+#include <array>
+
 namespace Banana
 {
   struct QuadVertex
@@ -456,42 +458,42 @@ namespace Banana
     {
       char character = text[i];
       if (character == '\r')
-	continue;
+	      continue;
 
       if (character == '\n')
       {
-	x = 0;
-	y -= fsScale * metrics.lineHeight + 0;
-	continue;
+	      x = 0;
+	      y -= fsScale * metrics.lineHeight + 0;
+	      continue;
       }
 
       if (character == ' ')
       {
-	float advance = spaceGlyphAdvance;
-	if (i < text.size() - 1)
-	{
-	  char nextCharacter = text[i + 1];
-	  double dAdvance;
-	  fontGeometry.getAdvance(dAdvance, character, nextCharacter);
-	  advance = (float)dAdvance;
-	}
+	      float advance = spaceGlyphAdvance;
+        if (i < text.size() - 1)
+        {
+          char nextCharacter = text[i + 1];
+          double dAdvance;
+          fontGeometry.getAdvance(dAdvance, character, nextCharacter);
+          advance = (float)dAdvance;
+        }
 
-	x += fsScale * advance + 0;
-	continue;
+	      x += fsScale * advance + 0;
+	      continue;
       }
 
       if (character == '\t')
       {
-	// NOTE(Yan): is this right?
-	x += 4.0f * (fsScale * spaceGlyphAdvance + 0);
-	continue;
+	      // NOTE(Yan): is this right?
+	      x += 4.0f * (fsScale * spaceGlyphAdvance + 0);
+	      continue;
       }
 
       auto glyph = fontGeometry.getGlyph(character);
       if (!glyph)
-	glyph = fontGeometry.getGlyph('?');
+	      glyph = fontGeometry.getGlyph('?');
       if (!glyph)
-	return;
+	      return;
 
       double al, ab, ar, at;
       glyph->getQuadAtlasBounds(al, ab, ar, at);
