@@ -8,7 +8,7 @@
 namespace SANDBOX
 {
   RunLayer::RunLayer(const std::string& name)
-    : name(name), sound(Banana::Sound("assets/sounds/menu.wav"))
+    : name(name)
   {
     ent.transform.pos = {-1, 0, 0};
     ent.transform.size = {0.2, 0.2, 0};
@@ -56,7 +56,6 @@ namespace SANDBOX
 
     if(Banana::Input::IsKeyPressed(KEY_N))
     {
-      sound.Start();
       texcomp->ChangeText("thunar bombs");
     }
     

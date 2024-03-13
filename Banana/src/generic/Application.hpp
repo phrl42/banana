@@ -6,7 +6,7 @@
 #include "layer/SceneStack.h"
 
 #include "renderer/Framebuffer.h"
-#include "generic/Sound.h"
+#include "generic/Sound/Sound.h"
 
 namespace Banana
 {
@@ -34,26 +34,27 @@ namespace Banana
     {
     public:
       SoundHelper()
-	{
+      {
 
-	}
+      }
 
       void Init()
-	{
-	  LOG_DEBUG("Initialized Sound Helper");
+	    {
+        LOG_DEBUG("Initialized Sound Helper");
 
-	  int success = ma_engine_init(NULL, &engine);
-	  ASSERT(success != MA_SUCCESS, std::string("Could not init engine: " + std::to_string(success)));
+        int success = ma_engine_init(NULL, &engine);
+        ASSERT(success != MA_SUCCESS, std::string("Could not init engine: " + std::to_string(success)));
 
-	  success = ma_engine_start(&engine);
-	  ASSERT(success != MA_SUCCESS, std::string("Could not start engine: " + std::to_string(success)));
-	}
+        success = ma_engine_start(&engine);
+        ASSERT(success != MA_SUCCESS, std::string("Could not start engine: " + std::to_string(success)));
+	    }
+      
       ~SoundHelper()
-	{
-	  LOG_DEBUG("Destroyed Sound Helper");
-	  ma_engine_stop(&engine);
-	  ma_engine_uninit(&engine);
-	}
+      {
+        LOG_DEBUG("Destroyed Sound Helper");
+        ma_engine_stop(&engine);
+        ma_engine_uninit(&engine);
+      }
       ma_engine engine;
     };
     SoundHelper sound_helper;
@@ -75,7 +76,7 @@ namespace Banana
     std::vector<uint32_t*> fb_ids;
   };
 
-// definition is in client
+  // definition is in client
   Application* CreateApplication();
 
 };

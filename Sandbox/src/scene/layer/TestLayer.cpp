@@ -8,7 +8,7 @@
 namespace SANDBOX
 {
   TestLayer::TestLayer(const std::string& name)
-    : name(name), sound(Banana::Sound("assets/sounds/menu.wav"))
+    : name(name), sound(Banana::SoundFile("assets/sounds/menu.wav"))
   {
     ent.transform.pos = {-1, 0, 0};
     ent.transform.size = {0.2, 0.2, 0};
