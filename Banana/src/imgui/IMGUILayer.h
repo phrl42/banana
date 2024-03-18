@@ -1,6 +1,7 @@
 #pragma once
 #include "_Banana.h"
 #include "layer/Layer.h"
+#include "imgui/IMGUIDebug.h"
 
 namespace Banana
 {

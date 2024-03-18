@@ -2,7 +2,7 @@
 
 #include "_Banana.h"
 #include "Window.hpp"
-#include "layer/Layer.h"
+#include "imgui/IMGUILayer.h"
 #include "layer/SceneStack.h"
 
 #include "renderer/Framebuffer.h"
@@ -63,8 +63,10 @@ namespace Banana
     bool OnWindowClose(WindowCloseEvent& e);
     bool OnWindowResize(WindowResizeEvent& e);
 
+    bool is_debug();
+
     SceneStack scene_stack;
-    Layer* debug_layer;
+    IMGUILayer* debug_layer;
 
     std::unique_ptr<Window> window;
 

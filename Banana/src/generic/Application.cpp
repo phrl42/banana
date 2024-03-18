@@ -61,6 +61,25 @@ namespace Banana
     scene_stack.PushScene(scene);
   }
 
+  bool Application::is_debug()
+  {
+    static bool press = false;
+    static bool debug = true;
+
+    if(Input::IsKeyPressed(KEY_U) && !press)
+    {
+      press = true;
+      debug = !debug;
+    }
+
+    if(!Input::IsKeyPressed(KEY_U))
+    {
+      press = false;
+    }
+
+    return debug;
+  }
+
   bool Application::OnWindowClose(WindowCloseEvent& e)
   {
     running = false;
@@ -87,7 +106,6 @@ namespace Banana
     return false;
   }
 
-
   void Application::Run()
   {
     for(Scene* scene : scene_stack)
@@ -100,6 +118,7 @@ namespace Banana
 
     double begin_time = 0.0f;
     double dt = 0.1f;
+
     while(running)
     {
       begin_time = window->GetTime();
@@ -110,31 +129,16 @@ namespace Banana
 
       if(!minimized)
       { 
-        // toggling
-        static bool press = false;
-        static bool debug = true;
-
-        if(Input::IsKeyPressed(KEY_U) && !press)
-        {
-          press = true;
-          debug = !debug;
-        }
-
-        if(!Input::IsKeyPressed(KEY_U))
-        {
-          press = false;
-        }
-
-        if(debug)
+        if(is_debug())
         {
           debug_layer->OnUpdate(dt);
         }
 
-	for(Scene* scene : scene_stack)
+	      for(Scene* scene : scene_stack)
         {
-	  scene->fb->Bind();
+	        scene->fb->Bind();
           scene->OnUpdate(dt);
-	  scene->fb->Unbind();
+	        scene->fb->Unbind();
         }
       }
       
