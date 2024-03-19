@@ -3,11 +3,14 @@
 
 namespace Banana
 {
-  enum class IMGUIDebugType {NONE=0, TEXT};
-
   struct IMGUIDebug
   {
-    IMGUIDebugType type;
-    std::string text;
+    static inline uint32_t quad_count;
+    static inline uint32_t texture_count;
+    static inline uint32_t text_glyphs;
+
+  private:
+    IMGUIDebug();
+    ~IMGUIDebug();
   };
 };

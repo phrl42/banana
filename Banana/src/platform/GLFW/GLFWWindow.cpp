@@ -46,7 +46,6 @@ namespace Banana
 
   }
 
-
   void GLFWWindow::Init(const WindowProps& window_props)
   {
     windowData.title = window_props.Title;

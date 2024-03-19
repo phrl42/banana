@@ -1,7 +1,6 @@
 #pragma once
 #include "_Banana.h"
 #include "layer/Layer.h"
-#include "imgui/IMGUIDebug.h"
 
 namespace Banana
 {
@@ -19,7 +18,6 @@ namespace Banana
     virtual void OnEvent(Event& event) override;
 
     virtual inline std::string& GetName() override { return name; }
-
   private:
     std::string name;
     float l_time;

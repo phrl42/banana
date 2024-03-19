@@ -10,7 +10,6 @@ namespace Banana
 {
   struct Texture2D;
 
-
   class Renderer2D
   {
   public:

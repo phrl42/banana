@@ -9,6 +9,8 @@
 #include "event/Input.hpp"
 #include "event/KeyCode.h"
 
+#include "imgui/IMGUIDebug.h"
+
 namespace Banana
 {
 
@@ -48,6 +50,7 @@ namespace Banana
     // Setup Platform/Renderer backends
     ImGui_ImplGlfw_InitForOpenGL((GLFWwindow*)Application::GetInstance().GetWindow().GetNativeWindow(), true);
     ImGui_ImplOpenGL3_Init("#version 460");
+
   }
 
   void IMGUILayer::OnDetach()
@@ -101,7 +104,7 @@ namespace Banana
       
       ImGui::DockBuilderFinish(dockspaceID);
 
-		  ImGui::DockBuilderDockWindow("Debug", dock_right_id);
+		  ImGui::DockBuilderDockWindow("Banana", dock_right_id);
 		  for(uint32_t i = 0; i < Application::GetInstance().fb_ids.size(); i++)
 		  {
 		    ImGui::DockBuilderDockWindow(std::string("Scene " + std::to_string(i)).c_str(), dock_main_id);
@@ -112,15 +115,16 @@ namespace Banana
     ImGui::DockSpace(dockspaceID, ImVec2(0.0f, 0.0f), dockflags);
     ImGui::End();
 
-    ImGui::Begin("Debug", nullptr, 0);
-    std::string msg = "FPS: 60";
-    if(1 / dt < 59) msg = "FPS: " + std::to_string(1 / dt);
-
-    ImGui::Text(msg.c_str());
-    ImGui::End();
-
-    ImGui::Begin("Info", nullptr, 0);
-    ImGui::Text("Info text");
+    ImGui::Begin("Banana", nullptr, 0);
+    
+    ImGui::Text(("FPS: " + std::to_string(1 / dt)).c_str());
+    ImGui::NewLine();
+    ImGui::Text(("Textures: " + std::to_string(IMGUIDebug::texture_count)).c_str());
+    ImGui::NewLine();
+    ImGui::Text(("Quads: " + std::to_string(IMGUIDebug::quad_count)).c_str());    
+    ImGui::NewLine();
+    ImGui::Text(("Glyphs: " + std::to_string(IMGUIDebug::text_glyphs)).c_str());    
+    
     ImGui::End();
 
     for(uint32_t i = 0; i < Application::GetInstance().fb_ids.size(); i++)

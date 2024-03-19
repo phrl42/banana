@@ -11,6 +11,8 @@
 #include "gtc/matrix_transform.hpp"
 #include "gtc/type_ptr.hpp"
 
+#include "imgui/IMGUIDebug.h"
+
 #include <array>
 
 namespace Banana
@@ -74,11 +76,11 @@ namespace Banana
 
     data.quad_vertex_buffer = VertexBuffer::Create(
       {
-	{ShaderDataType::Float3, "aPos"},
-	{ShaderDataType::Float4, "aColor"},
-	{ShaderDataType::Float2, "aTexCoords"},
-	{ShaderDataType::Float, "aProjectionID"},
-	{ShaderDataType::Float, "aTexID"}
+        {ShaderDataType::Float3, "aPos"},
+        {ShaderDataType::Float4, "aColor"},
+        {ShaderDataType::Float2, "aTexCoords"},
+        {ShaderDataType::Float, "aProjectionID"},
+        {ShaderDataType::Float, "aTexID"}
       }, sizeof(QuadVertex) * data.MAX_QUADS);
 
     data.quad_vertex_array->AddVertexBuffer(data.quad_vertex_buffer);
@@ -186,6 +188,10 @@ namespace Banana
 
   void Renderer2D::Flush()
   {
+    IMGUIDebug::texture_count = data.TextIndexCount;
+    IMGUIDebug::quad_count = data.QuadIndexCount;
+    IMGUIDebug::text_glyphs = data.TextIndexCount;
+
     if(data.QuadIndexCount)
     {
       uint32_t data_size = (uint32_t)((uint8_t*)data.quad_vertex_ptr - (uint8_t*)data.quad_vertex_base);
